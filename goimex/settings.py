@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import django_heroku
+import dj_database_url
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -69,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'goimex.urls'
@@ -157,6 +161,9 @@ STATICFILES_DIRS=[
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedMainfestStaticFilesStorage'
+
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -173,9 +180,13 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 EMAIL_HOST_USER = 'tushardsoft@gmail.com'
 EMAIL_HOST_PASSWORD = 'crjyzteymdoaaeox'
 
+django_heroku.settings(locals())
 
 SOCIAL_AUTH_FACEBOOK_KEY = '172084741468627'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '5b2c8b8814cc31ea3e131f34b2557a5e'
 
 LOGIN_URL = 'login'
+
+
+
 
